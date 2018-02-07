@@ -26,6 +26,7 @@ LATCH_ENABLE = ON
 FLIPFLOP_ENABLE = ON
 XOR_ENABLE = ON
 ADDER_ENABLE = ON
+SUBTRACTOR_ENABLE = ON
 MULTIPLEXER_ENABLE = ON
 TEST_MODE = ON
 
@@ -38,7 +39,7 @@ endif
 
 ifeq ($(TRANSISTOR_ENABLE),ON)
 	CFLAGS += -DTRANSISTOR_ENABLE \
-	-DTRANSISTOR_LATENCY=1
+	-DTRANSISTOR_LATENCY=0
 	C_SRC += ${COMPONENTS_DIR}/transistor.c
 	ifeq ($(TEST_MODE),ON)
 		C_SRC += ${TEST_DIR}/transistor_test.c
@@ -73,6 +74,14 @@ ifeq ($(TRANSISTOR_ENABLE),ON)
 					C_SRC += ${ROOT_DIR}/adder_8bit.c
 					ifeq ($(TEST_MODE),ON)
 						C_SRC += ${TEST_DIR}/adder_test.c
+					endif
+
+					ifeq ($(SUBTRACTOR_ENABLE),ON)
+						CFLAGS += -DSUBTRACTOR_ENABLE
+						C_SRC += ${ROOT_DIR}/subtractor_8bit.c
+						ifeq ($(TEST_MODE),ON)
+							C_SRC += ${TEST_DIR}/subtractor_8bit_test.c
+						endif
 					endif
 				endif
 			endif

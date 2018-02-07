@@ -7,6 +7,7 @@
 #include "nor_gate.h"
 #include "multiplexer.h"
 #include "adder_8bit.h"
+#include "subtractor_8bit.h"
 #include "flipflop_d.h"
 
 void test(const char *str, ...);
@@ -23,6 +24,7 @@ void half_adder_test(void);
 void full_adder_test(void);
 void multiplexer4x1_test(void);
 void adder_8bit_test(void);
+void subtractor_8bit_test(void);
 void latch_test(void);
 void flipflop_rs_test(void);
 void flipflop_d_test(void);

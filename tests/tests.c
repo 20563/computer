@@ -81,6 +81,10 @@ void tests(void)
 	adder_8bit_test();
 #endif /* ADDER_ENABLE */
 
+#ifdef SUBTRACTOR_ENABLE
+	subtractor_8bit_test();
+#endif /* SUBTRACTOR_ENABLE */
+
 #ifdef MULTIPLEXER_ENABLE
 	multiplexer4x1_test();
 #endif /* MULTIPLEXER_ENABLE */
