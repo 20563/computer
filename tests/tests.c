@@ -5,7 +5,7 @@ void test(const char *str, ...)
 {
 	va_list args;
 	char **pair = malloc(3 * sizeof(*pair));
-	int i = 0;
+	u8 i = 0;
 
 	va_start(args, str);
 	while (str) {
@@ -35,12 +35,14 @@ void test(const char *str, ...)
 
 void tests(void)
 {
+
 #ifdef TRANSISTOR_ENABLE
 	transistor_test();
 #endif /* TRANSISTOR_ENABLE */
 
 #ifdef AND_ENABLE
 	and_gate_test();
+	and_gate_multi_test();
 #endif /* AND_ENABLE */
 
 #ifdef OR_ENABLE
@@ -88,5 +90,9 @@ void tests(void)
 #ifdef MULTIPLEXER_ENABLE
 	multiplexer4x1_test();
 #endif /* MULTIPLEXER_ENABLE */
+
+#ifdef DEMULTIPLEXER_ENABLE
+	demultiplexer1x4_test();
+#endif /* DEMULTIPLEXER_ENABLE */
 }
 #endif /* TEST_MODE */

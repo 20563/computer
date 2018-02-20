@@ -16,7 +16,9 @@ CFLAGS += -c -Wall -pedantic -DCONFIG_USE_STDINT ${INCDIRS}
 DEBUG = -ggdb -O0
 TARGET = alu
 
+COMPUTER_CLOCK_SPEED = ON
 TRANSISTOR_ENABLE = ON
+TRANSISTOR_LATENCY = ON
 AND_ENABLE = ON
 OR_ENABLE = ON
 NOT_ENABLE = ON
@@ -28,6 +30,7 @@ XOR_ENABLE = ON
 ADDER_ENABLE = ON
 SUBTRACTOR_ENABLE = ON
 MULTIPLEXER_ENABLE = ON
+DEMULTIPLEXER_ENABLE = ON
 TEST_MODE = ON
 
 C_SRC = alu_main.c
@@ -37,9 +40,17 @@ ifeq ($(TEST_MODE),ON)
 	C_SRC += ${TEST_DIR}/tests.c
 endif
 
+ifeq ($(COMPUTER_CLOCK_SPEED),ON)
+	CFLAGS += -DCOMPUTER_CLOCK_SPEED
+endif
+CFLAGS += -DCOMPUTER_CLOCK
+C_SRC += ${ROOT_DIR}/computer_clock.c
+
 ifeq ($(TRANSISTOR_ENABLE),ON)
-	CFLAGS += -DTRANSISTOR_ENABLE \
-	-DTRANSISTOR_LATENCY=0
+	CFLAGS += -DTRANSISTOR_ENABLE
+	ifeq ($(TRANSISTOR_LATENCY),ON)
+		CFLAGS += -DTRANSISTOR_LATENCY
+	endif
 	C_SRC += ${COMPONENTS_DIR}/transistor.c
 	ifeq ($(TEST_MODE),ON)
 		C_SRC += ${TEST_DIR}/transistor_test.c
@@ -111,6 +122,16 @@ ifeq ($(TRANSISTOR_ENABLE),ON)
 					ifeq ($(TEST_MODE),ON)
 						C_SRC += ${TEST_DIR}/multiplexer_test.c
 					endif
+				endif
+			endif
+		endif
+
+		ifeq ($(DEMULTIPLEXER_ENABLE),ON)
+			ifeq ($(AND_ENABLE),ON)
+				CFLAGS += -DDEMULTIPLEXER_ENABLE
+				C_SRC += ${ROOT_DIR}/demultiplexer.c
+				ifeq ($(TEST_MODE),ON)
+					C_SRC += ${TEST_DIR}/demultiplexer_test.c
 				endif
 			endif
 		endif
